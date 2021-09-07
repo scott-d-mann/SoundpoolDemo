@@ -87,15 +87,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Load sound file (destroy.wav) into SoundPool.
+        // Load sound file (cow.wav) into SoundPool.
         this.soundIdCow = this.soundPool.load(this, R.raw.cow,1);
 
-        // Load sound file (gun.wav) into SoundPool.
+        // Load sound file (duck.wav) into SoundPool.
         this.soundIdDuck = this.soundPool.load(this, R.raw.duck,1);
 
     }
 
-    // When users click on the button "Gun"
+    // When users click on the button "Duck"
     public void playSoundDuck( )  {
         if(loaded)  {
             float leftVolume = volume;
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // When users click on the button "Destroy"
+    // When users click on the button "Cow"
     public void playSoundCow( )  {
         if(loaded)  {
             float leftVolume = volume;
