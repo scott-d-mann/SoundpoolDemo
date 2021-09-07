@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int streamType = AudioManager.STREAM_MUSIC;
 
     private boolean loaded;
-
     private int soundIdCow;
     private int soundIdDuck;
     private float volume;
@@ -62,30 +61,23 @@ public class MainActivity extends AppCompatActivity {
         // Get the maximum volume index for a particular stream type.
         float maxVolumeIndex  = (float) audioManager.getStreamMaxVolume(streamType);
 
-        // Volumn (0 --> 1)
+        // Volume is a value 0 --> 1
+        // Get the current stream's volume which is used as the volume with it setVolume method.
         this.volume = currentVolumeIndex / maxVolumeIndex;
 
         // Suggests an audio stream whose volume should be changed by
         // the hardware volume controls.
         this.setVolumeControlStream(streamType);
 
-        // For Android SDK >= 21
-        if (Build.VERSION.SDK_INT >= 21 ) {
-            AudioAttributes audioAttrib = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_GAME)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build();
+        AudioAttributes audioAttrib = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
 
-            SoundPool.Builder builder= new SoundPool.Builder();
-            builder.setAudioAttributes(audioAttrib).setMaxStreams(MAX_STREAMS);
+        SoundPool.Builder builder= new SoundPool.Builder();
+        builder.setAudioAttributes(audioAttrib).setMaxStreams(MAX_STREAMS);
 
-            this.soundPool = builder.build();
-        }
-        // for Android SDK < 21
-        else {
-            // SoundPool(int maxStreams, int streamType, int srcQuality)
-            this.soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
-        }
+        this.soundPool = builder.build();
 
         // When Sound Pool load complete.
         this.soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
@@ -103,26 +95,24 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     // When users click on the button "Gun"
     public void playSoundDuck( )  {
         if(loaded)  {
-            float leftVolumn = volume;
-            float rightVolumn = volume;
+            float leftVolume = volume;
+            float rightVolume = volume;
             // Play sound of gunfire. Returns the ID of the new stream.
-            int streamId = this.soundPool.play(this.soundIdDuck,leftVolumn, rightVolumn, 1, 0, 1f);
+            int streamId = this.soundPool.play(this.soundIdDuck,leftVolume, rightVolume, 1, 1, 1f);
         }
     }
 
     // When users click on the button "Destroy"
     public void playSoundCow( )  {
         if(loaded)  {
-            float leftVolumn = volume;
-            float rightVolumn = volume;
+            float leftVolume = volume;
+            float rightVolume = volume;
 
             // Play sound objects destroyed. Returns the ID of the new stream.
-            int streamId = this.soundPool.play(this.soundIdCow,leftVolumn, rightVolumn, 1, 0, 1f);
+            int streamId = this.soundPool.play(this.soundIdCow,leftVolume, rightVolume, 1, 0, 1f);
         }
     }
 
